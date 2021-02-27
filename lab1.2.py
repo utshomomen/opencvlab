@@ -9,8 +9,13 @@ import matplotlib.pyplot as plt
 
 def readFileAndResize():
     srcImage = cv2.imread("imagehh.jpg")
-    srcImage = cv2.resize(srcImage, (1080, 1080)) # default image
-    cv2.imshow("frame1", srcImage)
+
+    srcImage = cv2.resize(srcImage, (1080, 1080))# default image
+    img = np.uint16(srcImage)
+    img = np.clip(2.0 * img, 0, 255)
+    img = np.uint8(img)
+    cv2.imshow(" imagemain", img)
+
     cv2.waitKey(0)
     return srcImage
 
@@ -26,13 +31,27 @@ def halfTone():
 halfTone()
 
 def increasingContrast():
-    srcImage = cv2.imread("imagehh.jpg")
-    img = np.uint16(srcImage)
-    img = np.clip(2.0 * img, 0, 255)
-    img = np.uint8(img)
-    cv2.imshow(" contrast", img)
+
+
+    # srcImage = cv2.imread("imagehh.jpg")
+
+    # # img = np.uint16(srcImage)
+    # # img = np.clip(2.0 * img, 0, 255)
+    # # img = np.uint8(img)
+    # # cv2.imshow(" contrast", img)
+    # cv2.waitKey(0)
+
+
+    srcImage = cv2.imread('imagehh.jpg')
+    cv2.imshow('test', srcImage)
     cv2.waitKey(0)
-    return srcImage
+    imghsv = cv2.cvtColor(srcImage, cv2.COLOR_BGR2HSV)
+
+    imghsv[:, :, 2] = [[max(pixel - 25, 0) if pixel < 190 else min(pixel + 25, 255) for pixel in row] for row in
+                       imghsv[:, :, 2]]
+    cv2.imshow('integralcontrast', cv2.cvtColor(imghsv, cv2.COLOR_HSV2BGR))
+    cv2.waitKey(0)
+
 
 increasingContrast()
 
