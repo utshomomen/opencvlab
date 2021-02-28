@@ -4,6 +4,7 @@ import math
 import sys
 import random
 from os import path
+import matplotlib.pyplot as plt
 
 def loadingImageFilter():
     srcImage = cv2.imread("imagehh.jpg")
@@ -35,6 +36,7 @@ def convolution():
 
     cv2.imshow("edgedetecton", img_rst)
     cv2.waitKey(0)
+    srcImage = grayImg = cv2.cvtColor(srcImage, cv2.COLOR_BGR2GRAY)
 
 
 
@@ -99,6 +101,8 @@ def convolution():
 
 
 
+
+
 convolution()
 
 def relu(x):
@@ -110,6 +114,33 @@ def ReluAndMaxPool(x):
 
 
     srcImage = cv2.imread("imagehh.jpg")
+
+    b, g, r = cv2.split(srcImage)
+    tir = cv2.imread("imagehh.jpg", 0)
+    qb = cv2.imread("imagehh.jpg", 0)
+    channel_img = np.zeros((b.shape[0], b.shape[1], 5))
+
+    channel_img[:, :, 0] = b
+    channel_img[:, :, 1] = g
+    channel_img[:, :, 2] = r
+    channel_img[:, :, 3] = tir
+    channel_img[:, :, 4] = qb
+    cv2.imshow("ch1", b)
+    cv2.waitKey(0)
+
+    cv2.imshow("ch2", g)
+    cv2.waitKey(0)
+
+    cv2.imshow("ch3", r)
+    cv2.waitKey(0)
+
+    cv2.imshow("ch4", tir)
+    cv2.waitKey(0)
+
+    cv2.imshow("ch5", qb)
+    cv2.waitKey(0)
+
+
 
     mat = np.array([[0, -1, 0],
                         [-1, 5, -1],
@@ -129,4 +160,23 @@ def ReluAndMaxPool(x):
 
     cv2.imshow("max pool", max_pool)
     cv2.waitKey(0)
+
+
 ReluAndMaxPool(relu(x=1))
+
+# def channels ():
+#     srcImage = cv2.imread("imagehh.jpg")
+#     Mat  srcImage(5, 5, CV_64FC3);
+#     Mat ch1, ch2, ch3;
+#
+#     vector < Mat > channels(3);
+#
+#     split(img, channels);
+#
+#     ch1 = channels[0];
+#     ch2 = channels[1];
+#     ch3 = channels[2];
+#
+#
+#
+#     channels()
